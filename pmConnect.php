@@ -60,7 +60,8 @@ class pmConnect {
      * Description:	Class constructor
      * Returns:		TRUE on login success, otherwise FALSE
      */
-    function pmConnect($username = null, $password = null) {
+    function pmConnect($url, $username = null, $password = null) {
+	$this->url = $url;
         if(isset($username) and isset($password))
         {
             $this->username = $username;
