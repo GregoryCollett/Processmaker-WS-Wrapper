@@ -290,6 +290,7 @@ class pmConnect {
     }
     
     public function get_variables($case_id, $variables = null){
+<<<<<<< HEAD
       $params = array(array('sessionId' => $this->session, 'caseId' => $case_id, 'variables' => $variables));
       $result = $this->request('getVariables', $params);
       return $result;
@@ -299,6 +300,17 @@ class pmConnect {
      $params = array(array('sessionId' => $this->session, 'caseId' => $case_id, 'variables' => $variables));
      $result = $this->request('getVariables', $params);
      return $result;
+=======
+        $params = array(array('sessionId' => $this->session, 'caseId' => $case_id, 'variables' => $variables));
+        $result = $this->request('getVariables', $params);
+        return $result;
+   }
+   
+   public function send_variables($case_id, $variables = null){
+       $params = array(array('sessionId' => $this->session, 'caseId' => $case_id, 'variables' => $variables));
+        $result = $this->request('sendVariables', $params);
+        return $result;
+>>>>>>> cf504e1afd03c1cfc4e48d1a7cfe10d433462eae
    }
    
    public function get_trigger_list(){
