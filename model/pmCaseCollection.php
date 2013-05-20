@@ -1,12 +1,32 @@
 <?php
 
-class pmCaseCollection {
-	$cases = array();
-	function populate($caseArray) {
-		print_r(array_keys($caseArray));
-		foreach($caseArray as $caseRow) {
+require_once('pmCase.php');
+
+class pmCaseCollection implements IteratorAggregate {
+	private $cases = array();
+	function populateCases(pmConnect $connection) {
+		$cases = $connection->get_case_list();
+		foreach($cases->cases as $caseRow) {
+			$case = new pmCase();
+			$case->guid = $caseRow->guid;
+			$case->name = $caseRow->name;
+			$case->status = $caseRow->status;
+			$case->delIndex = $caseRow->delIndex;
+			$this->cases[$case->guid] = $case;
 		}
-		//$this->cases
+	}
+	function populateTaskCases(pmConnect $connection) {
+		foreach($this->cases as &$case) {
+			$case->fetchTaskCase($connection);
+		}
+	}
+	function populateDocLists(pmConnect $connection) {
+		foreach($this->cases as &$case) {
+			$case->fetchDocList($connection);
+		}
+	}
+	public function getIterator() {
+		return new ArrayIterator( $this->cases );
 	}
 }
 

@@ -296,7 +296,7 @@ class pmConnect {
    
    public function send_variables($case_id, $variables = null){
        $params = array(array('sessionId' => $this->session, 'caseId' => $case_id, 'variables' => $variables));
-        $result = $this->request('getVariables', $params);
+        $result = $this->request('sendVariables', $params);
         return $result;
    }
    
