@@ -11,15 +11,24 @@ class pmCase {
 	function fetchDocList(pmConnect $connection) {
 		$this->docs = $connection->output_doc_list($this->guid);
 	}
-	function fetchVariables(pmConnect $connection, $variables = null) {
+	function fetchVariables(pmConnect $connection, $names = null) {
 		$vars = array();
-		foreach($variables as $variable) {$vars[] = new variableStruct($variable);}
-		$this->variables = $connection->get_variables($this->guid, $vars);
+		foreach($names as $name) {$vars[] = new variableStruct($name);}
+		$variables = $connection->get_variables($this->guid, $vars);
+		if ($variables->variables) {
+			foreach($variables->variables as $variable) {
+				$this->variables[$variable->name] = $variable->value;
+			}
+		} else {
+			$this->variables = array();
+		}
 	}
 	function fetchCaseInfo(pmConnect $connection) {
 		$this->info = $connection->get_case_info($this->guid, 0);
 	}
-
+	function executeTrigger(pmConnect $connection, $triggerIndex) {
+		$connection->execute_trigger($this->guid, $triggerIndex, $this->delIndex);
+	}
 }
 
 ?>
