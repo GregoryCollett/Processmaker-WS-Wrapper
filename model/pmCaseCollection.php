@@ -6,14 +6,21 @@ class pmCaseCollection implements IteratorAggregate {
 	private $cases = array();
 	function populateCases(pmConnect $connection) {
 		$cases = $connection->get_case_list();
-		foreach($cases->cases as $caseRow) {
-			$case = new pmCase();
-			$case->guid = $caseRow->guid;
-			$case->name = $caseRow->name;
-			$case->status = $caseRow->status;
-			$case->delIndex = $caseRow->delIndex;
-			$this->cases[$case->guid] = $case;
+		if (count($cases->cases)>1) {
+			foreach($cases->cases as $caseRow) {
+				$this->createCase($caseRow);
+			}
+		} else {
+			$this->createCase($cases->cases);
 		}
+	}
+	function createCase($caseRow) {
+		$case = new pmCase();
+		$case->guid = $caseRow->guid;
+		$case->name = $caseRow->name;
+		$case->status = $caseRow->status;
+		$case->delIndex = $caseRow->delIndex;
+		$this->cases[$case->guid] = $case;
 	}
 	function populateTaskCases(pmConnect $connection) {
 		foreach($this->cases as &$case) {
