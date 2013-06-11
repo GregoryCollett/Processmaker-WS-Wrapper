@@ -10,7 +10,7 @@ class pmCaseCollection implements IteratorAggregate {
 			foreach($cases->cases as $caseRow) {
 				$this->createCase($caseRow);
 			}
-		} else {
+		} else if ($cases->cases) {
 			$this->createCase($cases->cases);
 		}
 	}
