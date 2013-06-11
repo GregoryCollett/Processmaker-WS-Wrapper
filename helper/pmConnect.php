@@ -108,16 +108,7 @@ class pmConnect {
      */
     private function request($call_name, $call_arguments) {
         $client = new SoapClient($this->url);
-	// TODO: Exception handling could probably be improved.
-	try {
-		return $client->__soapCall($call_name, $call_arguments);
-	} catch (SoapFault $e) {
-		echo "SoapFault: {$e->getMessage()}\n";
-	} catch (Exception $e) {
-		echo "Unknown Exception: {$e->getMessage()}\n";
-	}
-	//print_r($e);
-	die();
+	return $client->__soapCall($call_name, $call_arguments);
     }
     
     
@@ -245,8 +236,16 @@ class pmConnect {
     //get the active cases
     public function get_case_list() {
         $params = array(array('sessionId' => $this->session));
-        $result = $this->request('caseList', $params);
-        return $result;
+	try {
+		return $this->request('caseList', $params);
+	} catch (SoapFault $e) {
+		echo "SoapFault: {$e->getMessage()}. There are probably no cases.\n";
+	} catch (Exception $e) {
+		echo "Unknown Exception: {$e->getMessage()}\n";
+	}
+	$exceptionResult = new stdClass();
+	$exceptionResult->cases = null;
+	return $exceptionResult;
     }
     
     //get cases that have no user assigned (lost cases!)
