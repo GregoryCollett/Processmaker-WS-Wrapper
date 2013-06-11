@@ -1,5 +1,7 @@
 <?php
-
+/*
+* This item is still in development!!! not a full item!
+*/
 class pmDocumentUpload {
 
     private $caseID,
@@ -56,7 +58,7 @@ class pmDocumentUpload {
         
         ob_flush();
         $c_init = curl_init();
-        curl_setopt($c_init, CURLOPT_URL, 'http://151.236.221.19/sysworkflow/en/uxmodern/services/upload');
+        curl_setopt($c_init, CURLOPT_URL, 'http://[theurl]/sysworkflow/en/uxmodern/services/upload');
         // curl_setopt($c_init, CURLOPT_VERBOSE, 1);  //Uncomment to debug
         curl_setopt($c_init, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c_init, CURLOPT_POST, 1);
