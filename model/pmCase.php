@@ -15,7 +15,7 @@ class pmCase {
 		$vars = array();
 		foreach($names as $name) {$vars[] = new variableStruct($name);}
 		$variables = $connection->get_variables($this->guid, $vars);
-		if ($variables->variables) {
+		if (isset($variables->variables)) {
 			foreach($variables->variables as $variable) {
 				$this->variables[$variable->name] = $variable->value;
 			}
