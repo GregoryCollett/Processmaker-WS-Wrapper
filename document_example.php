@@ -28,7 +28,7 @@ require_once('helper/pmConnect.php');
 require_once('model/variableStruct.php');
 $case_id = "22548072451b07ccd15e3b8090597125";
 
-$pm = new pmConnect("http://salesprocess.gointeractive.biz/sysworkflow/en/green/services/wsdl2", "admin", "YOADspw*");
+$pm = new pmConnect("/sysworkflow/en/green/services/wsdl2", "username", "password");
 $payment = new variableListStruct("PaymentComplete", "No");
 $variables = array($payment);
 
