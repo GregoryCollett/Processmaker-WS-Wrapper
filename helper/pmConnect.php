@@ -60,39 +60,46 @@ class pmConnect {
      * Description:	Class constructor
      * Returns:		TRUE on login success, otherwise FALSE
      */
-    function pmConnect($url, $username = null, $password = null) {
+    function pmConnect($url, $username = null, $password = null, $auto_login = true) {
 	$this->url = $url;
         if(isset($username) and isset($password))
         {
             $this->username = $username;
             $this->password = $password;
         }
-        if ($this->login()) {
-            $this->logged_in = TRUE;
-            $data['session'] = $this->session;
-        } else {
-            $this->logged_in = FALSE;
-        }
+	if ($auto_login) {
+		if ($this->login()) {
+		    $this->logged_in = TRUE;
+		    $data['session'] = $this->session;
+		} else {
+		    $this->logged_in = FALSE;
+		}
+	}
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////                                     LOGIN				        ////
-    ////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * Function:	login()
-     * Parameters: 	none	
-     */
-    private function login() {
-        $params = array(array('userid' => $this->username, 'password' => $this->password));
-        $result = $this->request('login', $params);
-        if ($result->status_code == 0) {
-            $this->session = $result->message;
-            return TRUE;
-        } else {
-            $this->error = "Unable to connect to ProcessMaker. Error Number: $result->status_code Error Message: $result->message";
-            return FALSE;
-        }
-    }
+	////////////////////////////////////////////////////////////////////////////////////////
+	////                                     LOGIN				        ////
+	////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	* Function:	login()
+	* Parameters: 	none	
+	*/
+	public function login() {
+		$params = array(array('userid' => $this->username, 'password' => $this->password));
+		$result = $this->request('login', $params);
+		$this->pm_status_code = $result->status_code;
+		if ($result->status_code == 0) {
+			$this->session = $result->message;
+			return TRUE;
+		} else {
+			$this->pm_error = $result->message;
+			$this->error = "Unable to connect to ProcessMaker. Error Number: $result->status_code Error Message: $result->message";
+			return FALSE;
+		}
+	}
+
+	public $pm_status_code = 0;
+	public $pm_error = "";
 
     ////////////////////////////////////////////////////////////////////////////////////////
     ////                                    REQUESTS			                        ////
