@@ -32,6 +32,11 @@ class pmCaseCollection implements IteratorAggregate {
 			$case->fetchDocList($connection);
 		}
 	}
+	function populateCaseInfo(pmConnect $connection) {
+		foreach($this->cases as &$case) {
+			$case->fetchCaseInfo($connection);
+		}
+	}
 	public function getIterator() {
 		return new ArrayIterator( $this->cases );
 	}

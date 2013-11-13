@@ -25,15 +25,15 @@ class pmCase {
 		}
 	}
 	function fetchCaseInfo(pmConnect $connection) {
-		$this->info = $connection->get_case_info($this->guid, 0);
+		$this->info = $connection->get_case_info($this->guid, $this->delIndex);
 	}
 	function executeTrigger(pmConnect $connection, $triggerIndex) {
 		$connection->execute_trigger($this->guid, $triggerIndex, $this->delIndex);
 	}
-	function push(pmConnect $connection) {
+	/*function push(pmConnect $connection) {
 		foreach($this->variables as 
 		$connection->new_case($this->process_id, $task_id, $variables = null);
-	}
+	}*/
 }
 
 ?>
