@@ -5,6 +5,7 @@ require_once('variableStruct.php');
 class pmCase {
 	public $guid, $name, $status, $delIndex;
 	public $task, $docs, $variables, $info;
+	public $process_id;
 	function fetchTaskCase(pmConnect $connection) {
 		$this->task = $connection->get_task_case($this->guid);
 	}
@@ -28,6 +29,10 @@ class pmCase {
 	}
 	function executeTrigger(pmConnect $connection, $triggerIndex) {
 		$connection->execute_trigger($this->guid, $triggerIndex, $this->delIndex);
+	}
+	function push(pmConnect $connection) {
+		foreach($this->variables as 
+		$connection->new_case($this->process_id, $task_id, $variables = null);
 	}
 }
 

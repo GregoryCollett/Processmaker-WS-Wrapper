@@ -2,7 +2,10 @@
 
 class variableStruct {
 	public $name;
-	function __construct($name) {$this->name = $name;}
+	function __construct($name, $value = null) {
+		$this->name = $name;
+		if ($value) {$this->value = $value;}
+	}
 }
 
 
