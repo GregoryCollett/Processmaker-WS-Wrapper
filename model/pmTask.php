@@ -8,9 +8,15 @@ class pmTask extends pmBase{
 	function __construct() {
 		$this->cases = new pmCaseCollection();
 	}
-	function setProcess($process) {$this->process = $process;}
+	function setProcess($process) {
+		$this->process = $process;
+		$process->addTask($this);
+	}
 	function addCase($case) {
 		$this->cases->add($case);
+	}
+	public function printChildren($depth, $showId) {
+		$this->cases->printTree($depth, $showId);
 	}
 }
 

@@ -28,6 +28,7 @@ class pmCase extends pmBase {
 	}
 	function fetchCaseInfo(pmConnect $connection) {
 		$this->info = $connection->get_case_info($this->getID(), $this->delIndex);
+		$this->processId = $this->info->processId;
 	}
 	function executeTrigger(pmConnect $connection, $triggerIndex) {
 		$connection->execute_trigger($this->getID(), $triggerIndex, $this->delIndex);
@@ -39,7 +40,7 @@ class pmCase extends pmBase {
 				$this->task->setProcess($process);
 			} catch(NoSuchItemException $e) {
 				print_r($this);
-				die();
+				die("\nDied\n");
 			} catch(Exception $e) {
 				throw $e;
 			}

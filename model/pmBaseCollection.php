@@ -1,6 +1,6 @@
 <?php
 
-//require_once("pmBase.php");
+//l
 
 class pmBaseCollection implements IteratorAggregate {
 	private $items = array();
@@ -23,6 +23,11 @@ class pmBaseCollection implements IteratorAggregate {
 		}
 	}
 	public function add($item) {$this->items[$item->getID()] = &$item;}
+	public function printTree($depth = 0, $showId = false) {
+		foreach($this as $item) {
+			$item->printLeaf($depth, $showId);
+		}
+	}
 }
 
 class NoSuchItemException extends Exception {}
