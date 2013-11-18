@@ -4,6 +4,12 @@
  * PM Connector - SugarCRM
  * @author Gregory Collett
  */
+ 
+class PMSOAPException extends Exception {
+	function getClient() {return $this->client;}
+	function setClient($client) {$this->client=$client;}
+}
+ 
 class pmConnect {
     ////////////////////////////////////////
     /// Settings Configuration Variables
@@ -114,8 +120,15 @@ class pmConnect {
      * Returns:		An object
      */
     private function request($call_name, $call_arguments) {
+	$call_arguments[0]['version'] = 1;
         $client = new SoapClient($this->url);
-	return $client->__soapCall($call_name, $call_arguments);
+	try {
+		return $client->__soapCall($call_name, $call_arguments);
+	} catch(Exception $e) {
+		$e2 = new PMSOAPException("pmConnect: ".$e->getMessage());
+		$e2->setClient($client);
+		throw $e2;
+	}
     }
     
     
