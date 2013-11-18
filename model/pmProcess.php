@@ -8,9 +8,10 @@ class pmProcess extends pmBase {
 	public function printChildren($depth, $showId) {
 		$this->tasks->printTree($depth, $showId);
 	}
-	function addTask($task) {
+	function addTask($task) { // Seems a bit superfluous, should probably use getTask and add to that.
 		$this->tasks->add($task);
 	}
+	function getTasks() {return $this->tasks;}
 }
 
 ?>

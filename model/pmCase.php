@@ -40,7 +40,7 @@ class pmCase extends pmBase {
 				$this->task->setProcess($process);
 			} catch(NoSuchItemException $e) {
 				print_r($this);
-				die("\nDied\n");
+				die("\nDied - task doesn't exist for this case. Presumably need to getInfo.\n");
 			} catch(Exception $e) {
 				throw $e;
 			}
@@ -52,10 +52,21 @@ class pmCase extends pmBase {
 		$this->task = $tasks->get($this->info->currentUsers->taskId);
 		$this->task->addCase($this);
 	}
-	/*function push(pmConnect $connection) {
-		foreach($this->variables as 
-		$connection->new_case($this->process_id, $task_id, $variables = null);
-	}*/
+	function getVariableStructs() {
+		$vars = array();
+		foreach($this->variables as $name => $value) {
+			$vars[] = new variableStruct($name, $value);
+		}
+		return $vars;
+	}
+	function push(pmConnect $connection) {
+		if ($this->getID()) {
+			// Not so interested in overwriting cases right now.
+		} else {
+			$variables = $this->getVariableStructs();
+			$connection->new_case($this->task->getProcess()->getID(), $this->task->getID(), $variables);
+		}
+	}
 }
 
 class NoTaskAssignedException extends Exception {}

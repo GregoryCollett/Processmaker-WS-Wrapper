@@ -1,7 +1,7 @@
 <?php
 
 class variableStruct {
-	public $name;
+	public $name, $value;
 	function __construct($name, $value = null) {
 		$this->name = $name;
 		if ($value) {$this->value = $value;}

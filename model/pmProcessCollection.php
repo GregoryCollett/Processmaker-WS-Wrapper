@@ -8,7 +8,15 @@ class pmProcessCollection extends pmBaseCollection {
 		$response = $connection->get_process_list();
 		$this->populate($response->processes, "pmProcess");
 	}
-	//function 
+	function getTaskByNames($processName, $taskName) {
+		$chosenTask = null;
+		foreach($processes->getByName($processName) as $process) {
+			foreach($process->getTasks()->getByName($taskName) as $task) {
+				$chosentask = $task;
+			}
+		}
+		return $chosenTask;
+	}
 }
 
 ?>
