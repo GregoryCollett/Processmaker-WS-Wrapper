@@ -18,6 +18,7 @@ class pmTask extends pmBase{
 	public function printChildren($depth, $showId) {
 		$this->cases->printTree($depth, $showId);
 	}
+	public function getCases() {return $this->cases;}
 }
 
 ?>
