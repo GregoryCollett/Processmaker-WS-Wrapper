@@ -7,6 +7,7 @@ class pmCase extends pmBase {
 	public $name, $status, $delIndex;
 	public $task, $docs, $variables, $info;
 	public $processId;
+	private $fields = array();
 	
 	function fetchTaskCase(pmConnect $connection) {
 		$this->task = $connection->get_task_case($this->getID());
@@ -67,6 +68,8 @@ class pmCase extends pmBase {
 			$connection->new_case($this->task->getProcess()->getID(), $this->task->getID(), $variables);
 		}
 	}
+	function setFields($fields) {$this->fields = array_merge($this->fields, $fields);}
+	function getFields() {return $this->fields;}
 }
 
 class NoTaskAssignedException extends Exception {}
