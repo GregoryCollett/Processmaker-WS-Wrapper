@@ -17,6 +17,13 @@ class pmProcessCollection extends pmBaseCollection {
 		}
 		return $chosenTask;
 	}
+	function getCase($id) {
+		foreach($this as $process) {
+			foreach($process->getTasks() as $task) {
+				return $task->getCases()->get($id);
+			}
+		}
+	}
 }
 
 ?>
